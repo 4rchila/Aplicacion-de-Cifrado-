@@ -1,0 +1,22 @@
+├── main.py                     # Punto de entrada principal con CustomTkinter
+├── gui/                        
+│   ├── __init__.py
+│   ├── ventana_principal.py    # Clase principal de la interfaz (tabs: claves, cifrado, firma)
+│   ├── pestaña_claves.py       # UI para generar/guardar/cargar claves
+│   ├── pestaña_cifrado.py      # UI para cifrar/descifrar
+│   └── pestaña_firma.py        # UI para firmar/verificar
+│
+├── logic/
+│   ├── __init__.py
+│   ├── claves.py               # Funciones para generar, guardar y cargar claves RSA
+│   ├── cifrado.py              # Funciones para cifrar/descifrar mensajes o archivos
+│   ├── firma.py                # Funciones para firmar/verificar firmas digitales
+│   └── hash_utils.py           # Función para generar hash FNV-1 o similar
+│
+├── data/
+│   ├── claves_publicas/        # Carpeta para guardar claves públicas
+│   ├── claves_privadas/        # Carpeta para guardar claves privadas
+│   ├── mensajes/               # Mensajes de prueba
+│   └── firmas/                 # Archivos de firmas
+│
+└── README.md                   # Instrucciones básicas
