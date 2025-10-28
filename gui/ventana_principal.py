@@ -1,4 +1,8 @@
 import customtkinter as ctk
+from pestaña_firma import abrir_ventana_firma_digital  
+
+ctk.set_appearance_mode("light")
+ctk.set_default_color_theme("blue")
 
 def on_enter(event):
     event.widget.configure(
@@ -12,7 +16,7 @@ def on_leave(event):
         text_color="#F7EEDD"
     )
 
-def create_home_frame(main_container):
+def create_home_frame(main_container, app):
     frame = ctk.CTkFrame(main_container, fg_color="#F7EEDD")
     
     frame.grid_rowconfigure(0, weight=1)
@@ -58,7 +62,7 @@ def create_home_frame(main_container):
     
     btn3 = ctk.CTkButton(
         button_container, 
-        text="Firma ditital", 
+        text="Firma digital", 
         width=140, 
         height=120, 
         fg_color="#DE6339", 
@@ -66,7 +70,8 @@ def create_home_frame(main_container):
         border_width=2, 
         font=ctk.CTkFont(size=16, weight="bold"),
         hover=False,
-        text_color="#F7EEDD"
+        text_color="#F7EEDD",
+        command=lambda: abrir_ventana_firma_digital(app)  # ¡LLAMADA AL MÓDULO!
     )
     
     btn1.grid(row=1, column=0, padx=20, pady=20)
@@ -125,7 +130,7 @@ ctk.CTkLabel(
 main_container = ctk.CTkFrame(app, fg_color="transparent")
 main_container.pack(fill="both", expand=True, padx=30, pady=30)
 
-home_frame = create_home_frame(main_container)
+home_frame = create_home_frame(main_container, app)
 home_frame.pack(fill="both", expand=True)
 
 info_frame = ctk.CTkFrame(main_container, fg_color="#FFD199", corner_radius=10)
@@ -144,7 +149,7 @@ footer_frame.pack_propagate(False)
 
 ctk.CTkLabel(
     footer_frame,
-    text="Proyecto IV, Estrucutra de Datos II",
+    text="Proyecto IV, Estructura de Datos II",
     text_color="#8B4512",
     font=ctk.CTkFont(size=12)
 ).pack(pady=20)
