@@ -3,6 +3,16 @@ from tkinter import filedialog, messagebox
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives import serialization
 
+def cargar_claves(ruta_privada, ruta_publica):
+    try:
+        with open(ruta_privada, "rb") as f:
+            clave_privada = serialization.load_pem_private_key(f.read(), password=None)
+        with open(ruta_publica, "rb") as f:
+            clave_publica = serialization.load_pem_public_key(f.read())
+        return clave_privada, clave_publica
+    except Exception as e:
+        messagebox.showerror("Error", f"No se pudieron cargar las claves:\n{e}")
+        return None, None
 
 def generar_claves():
     private_key = rsa.generate_private_key(public_exponent=65537, key_size=4096)

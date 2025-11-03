@@ -1,109 +1,61 @@
+# pestaña_cifrado.py
 import customtkinter as ctk
 from tkinter import messagebox
+import sys
+import os
 from logic.cifrado import (
     cargar_claves_desde_archivos,
     cifrar_archivo,
     descifrar_archivo
 )
 
-class PestañaCifrado(ctk.CTkFrame):
-    def __init__(self, parent):
-        super().__init__(parent)
-        self.configure(fg_color="#f7eedd", corner_radius=10)
-        self.grid_rowconfigure(3, weight=1)
-        self.grid_columnconfigure(0, weight=1)
-
+class FrameCifrado(ctk.CTkFrame):
+    def __init__(self, parent, volver_callback):
+        super().__init__(parent, fg_color="#F7EEDD")
+        self.volver_callback = volver_callback
         self.clave_privada = None
         self.clave_publica = None
 
-        ctk.CTkLabel(
-            self,
-            text="Cifrado y Descifrado de Archivos",
-            text_color="#e76940",
-            font=ctk.CTkFont(size=20, weight="bold")
-        ).pack(pady=(20, 10))
+        ctk.CTkLabel(self, text="Cifrado y Descifrado",
+                     font=ctk.CTkFont(size=24, weight="bold"),
+                     text_color="#901F01").pack(pady=20)
 
-        claves_frame = ctk.CTkFrame(self, fg_color="#f7eedd", corner_radius=10)
-        claves_frame.pack(pady=20, padx=20, fill="x")
+        ctk.CTkButton(self, text="Cargar claves (.pem)",
+                      fg_color="#DE6339", border_color="#8B4512",
+                      border_width=2, text_color="#F7EEDD",
+                      command=self.cargar_claves).pack(pady=20, padx=60, fill="x")
 
-        ctk.CTkLabel(
-            claves_frame,
-            text="Cargar claves para cifrar o descifrar:",
-            text_color="white",
-            font=ctk.CTkFont(size=14)
-        ).pack(pady=(10, 5))
+        self.lbl_estado = ctk.CTkLabel(self, text="Claves no cargadas",
+                                       text_color="#8B4512")
+        self.lbl_estado.pack()
 
-        ctk.CTkButton(
-            claves_frame,
-            text="Cargar Claves (.pem)",
-            fg_color="#f7eedd",
-            hover_color="#e76940",
-            command=self.cargar_claves
-        ).pack(pady=(5, 15))
+        ctk.CTkButton(self, text="Cifrar archivo",
+                      fg_color="#DE6339", border_color="#8B4512",
+                      border_width=2, text_color="#F7EEDD",
+                      command=self.cifrar).pack(pady=20, padx=60, fill="x")
 
-        self.lbl_estado_claves = ctk.CTkLabel(
-            claves_frame,
-            text="Claves no cargadas.",
-            text_color="#c8e2ff"
-        )
-        self.lbl_estado_claves.pack(pady=(0, 10))
+        ctk.CTkButton(self, text="Descifrar archivo",
+                      fg_color="#DE6339", border_color="#8B4512",
+                      border_width=2, text_color="#F7EEDD",
+                      command=self.descifrar).pack(pady=20, padx=60, fill="x")
 
-        acciones_frame = ctk.CTkFrame(self, fg_color="#f7eedd", corner_radius=10)
-        acciones_frame.pack(pady=20, padx=20, fill="both", expand=True)
-
-        ctk.CTkLabel(
-            acciones_frame,
-            text="Seleccione una acción:",
-            text_color="white",
-            font=ctk.CTkFont(size=14)
-        ).pack(pady=(15, 5))
-
-        ctk.CTkButton(
-            acciones_frame,
-            text="Cifrar Archivo",
-            fg_color="#f7eedd",
-            hover_color="#e76940",
-            command=self.cifrar
-        ).pack(pady=(10, 10), padx=60, fill="x")
-
-        ctk.CTkButton(
-            acciones_frame,
-            text="Descifrar Archivo",
-            fg_color="#f7eedd",
-            hover_color="#e76940",
-            command=self.descifrar
-        ).pack(pady=(10, 20), padx=60, fill="x")
-
-        self.info_label = ctk.CTkLabel(
-            acciones_frame,
-            text="Seleccione un archivo .txt para cifrar o .bin para descifrar.",
-            text_color="#b4c7e7",
-            wraplength=450,
-            justify="center"
-        )
-        self.info_label.pack(pady=(10, 15))
+        ctk.CTkButton(self, text="← Volver al menú",
+                      fg_color="#901F01", text_color="white",
+                      command=self.volver_callback).pack(pady=40)
 
     def cargar_claves(self):
         self.clave_privada, self.clave_publica = cargar_claves_desde_archivos()
         if self.clave_privada and self.clave_publica:
-            self.lbl_estado_claves.configure(
-                text="Claves cargadas correctamente",
-                text_color="#e76940"
-            )
+            self.lbl_estado.configure(text="✅ Claves cargadas", text_color="#008000")
         else:
-            self.lbl_estado_claves.configure(
-                text="Error al cargar las claves",
-                text_color="red"
-            )
+            self.lbl_estado.configure(text="❌ Error", text_color="red")
 
     def cifrar(self):
         if not self.clave_publica:
-            messagebox.showwarning("Advertencia", "Primero carga las claves.")
-            return
+            return messagebox.showwarning("Atención","Primero carga las claves")
         cifrar_archivo(self.clave_publica)
 
     def descifrar(self):
         if not self.clave_privada:
-            messagebox.showwarning("Advertencia", "Primero carga las claves.")
-            return
+            return messagebox.showwarning("Atención","Primero carga las claves")
         descifrar_archivo(self.clave_privada)
