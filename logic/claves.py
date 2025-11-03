@@ -2,7 +2,10 @@ import os
 from tkinter import filedialog, messagebox
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives import serialization
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))  # raiz del proyecto
 
+RUTA_PRIVADAS = os.path.join(BASE_DIR, "data", "claves_privadas")
+RUTA_PUBLICAS = os.path.join(BASE_DIR, "data", "claves_publicas")
 def cargar_claves(ruta_privada, ruta_publica):
     try:
         with open(ruta_privada, "rb") as f:
@@ -20,9 +23,9 @@ def generar_claves():
     return private_key, public_key
 
 
-def guardar_claves(private_key, public_key, ruta_privada, ruta_publica):
-    os.makedirs(os.path.dirname(ruta_privada), exist_ok=True)
-    os.makedirs(os.path.dirname(ruta_publica), exist_ok=True)
+def guardar_claves(private_key, public_key, nombre_clave):
+    ruta_privada = os.path.join(RUTA_PRIVADAS, f"{nombre_clave}_private.pem")
+    ruta_publica = os.path.join(RUTA_PUBLICAS, f"{nombre_clave}_public.pem")
 
     with open(ruta_privada, "wb") as f:
         f.write(
@@ -40,6 +43,11 @@ def guardar_claves(private_key, public_key, ruta_privada, ruta_publica):
                 format=serialization.PublicFormat.SubjectPublicKeyInfo
             )
         )
+
+    messagebox.showinfo("Claves guardadas",
+                        f"✅ Privada: {ruta_privada}\n✅ Pública: {ruta_publica}")
+
+    return ruta_privada, ruta_publica
 
 
 def cargar_clave_privada():

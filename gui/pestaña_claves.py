@@ -50,13 +50,15 @@ class FrameClaves(ctk.CTkFrame):
             messagebox.showinfo("Clave cargada", f"Pública: {os.path.basename(ruta)}")
 
     def generar_guardar(self):
-        carpeta = filedialog.askdirectory(title="Selecciona carpeta")
-        if not carpeta: return
-        
+        nombre = ctk.CTkInputDialog(text="Ingrese nombre para las claves:", title="Nombre de las claves").get_input()
+    
+        if not nombre:
+            messagebox.showwarning("Cancelado", "No se ingresó nombre para las claves.")
+            return
+    
         priv, pub = generar_claves()
-        guardar_claves(priv, pub,
-            os.path.join(carpeta,"clave_privada.pem"),
-            os.path.join(carpeta,"clave_publica.pem")
-        )
-
-        messagebox.showinfo("Éxito","Claves generadas correctamente")
+        
+        # ✅ Guardado automático en data/...
+        guardar_claves(priv, pub, nombre)
+    
+        messagebox.showinfo("Éxito", f"Claves '{nombre}' generadas y guardadas correctamente.")
