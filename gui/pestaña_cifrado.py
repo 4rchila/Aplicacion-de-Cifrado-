@@ -1,8 +1,8 @@
-# pestaña_cifrado.py
+# gui/pestaña_cifrado.py
 import customtkinter as ctk
 from tkinter import messagebox
-import sys
 import os
+
 from logic.cifrado import (
     cargar_claves_desde_archivos,
     cifrar_archivo,
@@ -44,18 +44,27 @@ class FrameCifrado(ctk.CTkFrame):
                       command=self.volver_callback).pack(pady=40)
 
     def cargar_claves(self):
-        self.clave_privada, self.clave_publica = cargar_claves_desde_archivos()
-        if self.clave_privada and self.clave_publica:
+        """
+        Carga las claves usando la función lógica. La función inteligente de carga:
+        - si hay un único par en data/ lo carga automáticamente
+        - si hay muchos o ninguno, abre diálogos para que el usuario seleccione
+        """
+        priv, pub = cargar_claves_desde_archivos()
+        if priv and pub:
+            self.clave_privada = priv
+            self.clave_publica = pub
             self.lbl_estado.configure(text="✅ Claves cargadas", text_color="#008000")
         else:
-            self.lbl_estado.configure(text="❌ Error", text_color="red")
+            self.clave_privada = None
+            self.clave_publica = None
+            self.lbl_estado.configure(text="❌ Claves no cargadas", text_color="red")
 
     def cifrar(self):
         if not self.clave_publica:
-            return messagebox.showwarning("Atención","Primero carga las claves")
+            return messagebox.showwarning("Atención", "Primero carga las claves")
         cifrar_archivo(self.clave_publica)
 
     def descifrar(self):
         if not self.clave_privada:
-            return messagebox.showwarning("Atención","Primero carga las claves")
+            return messagebox.showwarning("Atención", "Primero carga las claves")
         descifrar_archivo(self.clave_privada)
