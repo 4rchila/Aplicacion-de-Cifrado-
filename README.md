@@ -1,26 +1,49 @@
-# Aplicacion-de-Cifrado-
-Un programa hecho en python para cifrar datos de forma Asimétrica y una Firma digital 
+# Aplicación de Cifrado
 
+Un programa desarrollado en Python para cifrar datos de forma asimétrica y para la creación de firmas digitales.
 
-Funcionamiento del sistema:
+## Funcionamiento del Sistema
 
-El sistema cuenta con 3 opciones las cuales ejecutan las siguientes acciones:
-1. Gestión de claves
-2. Cifrado y descifrado
-3. Firma digital
+El sistema ofrece tres opciones principales:
 
-## Gestión de claves
-En esta opción se muestran 3 botones, el primero es para cargar la clave privada, luego otro para la clave pública y finalmente el botón que genera y guarda las claves resultantes. Basta con añadir estos archivos para que devuleva e ingresar el nombre para las claves.
+1. **Gestión de Claves**
+2. **Cifrado y Descifrado**
+3. **Firma Digital**
 
-## Cifrado y descifrado
-En este menú el primer paso es cargar las claves para el cifrado, seguido de ello se carga el archivo a cifrar en el programa para finalmente presionar el botón para cifrar el archivo en función de la clave precargada. Es obligatorio cargar las claves antes de iniciar cualquier otro proceso.
+## Gestión de Claves
 
-## Firma digital
+En esta opción, se presentan tres botones:
 
-La firma digital es un mecanismo criptográfico por el cual se verifica la autenticidad de un documento o archivo al firmarlo digitalmente, esto con el fin que quien reciba el documento pueda corroborar que no tuvo modificación.
+- **Cargar Clave Privada**: Permite cargar la clave privada necesaria para el cifrado y la firma.
+- **Cargar Clave Pública**: Permite cargar la clave pública correspondiente.
+- **Generar y Guardar Claves**: Este botón genera nuevas claves y las guarda en el sistema. Solo es necesario añadir los archivos y proporcionar un nombre para las claves.
 
-Para emplear esta función se abre un menú el cual al inicio solicita una llave pública o privada. Esta puede ser una externa o así, si el usuario prefiere, el sistema contiene embedido un creador de claves automático. 
-Tras cargar las claves, se solicita el archivo a firmar y este se carga desde el sistema del usuario. Para firmar, basta con presionar en "Firmar archivo" para realizar la acción y así encriptar el archivo con su firma.
-Finalmente, para verificar la autenticidad del archivo se debe ingresar tanto el archivo original como el firmado para que el sistema compare si este es verídico o no, devolviendo los resultados en pantalla.
+## Cifrado y Descifrado
 
-Enlace al GitHub: https://github.com/4rchila/Aplicacion-de-Cifrado-
+Para cifrar y descifrar archivos, sigue estos pasos:
+
+1. **Cargar las Claves**: Es obligatorio cargar las claves antes de proceder con cualquier otro proceso.
+2. **Seleccionar el Archivo**: Carga el archivo que deseas cifrar.
+3. **Cifrar el Archivo**: Presiona el botón correspondiente para cifrar el archivo utilizando las claves previamente cargadas.
+
+## Firma Digital
+
+La firma digital es un mecanismo criptográfico que verifica la autenticidad de un documento o archivo al firmarlo digitalmente, permitiendo al receptor comprobar que no ha habido modificaciones.
+
+Para utilizar esta función:
+
+1. **Seleccionar Llave**: Se abrirá un menú que solicita una llave pública o privada. Puedes usar una llave externa o, si lo prefieres, el sistema incluye un generador de claves automático.
+2. **Cargar el Archivo a Firmar**: Selecciona el archivo desde tu sistema.
+3. **Firmar el Archivo**: Presiona "Firmar archivo" para realizar la acción y encriptar el archivo con tu firma.
+4. **Verificar Autenticidad**: Para comprobar la autenticidad, ingresa tanto el archivo original como el firmado. El sistema comparará ambos y devolverá los resultados en pantalla.
+
+## Enlace al GitHub
+
+[Repositorio de GitHub](https://github.com/4rchila/Aplicacion-de-Cifrado-)
+
+---
+
+**Autores:**
+
+- German Juan Carlos Archila Batz - 1526824
+- Rodrigo Gabriel Pérez Vásquez - 1576224
